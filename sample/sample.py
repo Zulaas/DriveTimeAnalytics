@@ -1,6 +1,5 @@
-def main():
+def sample():
     print("hello world!")
 
 
-main()
-
+sample()
