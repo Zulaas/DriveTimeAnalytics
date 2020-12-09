@@ -7,12 +7,17 @@ analyzes the time per Cycle a Continous Miner drives forward or backwards
 
 ## Start the Project
 
-if there are Problemes using **make** check out the following [documentation file](/docs/using_make_on_windows.md)
+*  [Configure a virtual environment](https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html)
+
 
 run: 
 ```commandline
     make init
 ```
+
+if there are problems using **make** on Windows check out the following [documentation file](/docs/using_make_on_windows.md)
+
+
 * can be replaced in future version with the **setup.py** 
 
 run test:

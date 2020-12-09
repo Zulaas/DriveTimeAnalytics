@@ -1,5 +1,10 @@
+BIN=venv/Scripts/
+
 init:
-	pip install -r requirements.txt
+	$(BIN)pip install -r requirements.txt
+
+run:
+	$(BIN)python sample/sample.py
 
 test:
-	nosetests tests
+	$(BIN)pytest tests
