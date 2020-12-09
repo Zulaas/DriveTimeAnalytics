@@ -8,6 +8,8 @@ to get all dependecies
 
 if there are Problemes using make chekc out the following documentation file
 PATH TO FILE
+to get all requirements via requirements.txt file
+explanation: https://pip.pypa.io/en/stable/user_guide/#requirements-files
 
 run:
 ```
