@@ -9,7 +9,7 @@ to get all dependecies
 if there are Problemes using make chekc out the following documentation file
 PATH TO FILE
 to get all requirements via requirements.txt file
-explanation: https://pip.pypa.io/en/stable/user_guide/#requirements-files
+explanation: 
 
 run:
 ```
@@ -18,10 +18,17 @@ run:
 
 to run test:
 ```
-    make init
+    make test
 ```
 
-## Show Results in Excel
 
-as a diagram 
+## Show Results in for example Excel
 
+work in progress
+
+## Additional Informations
+
+about:
+
+* [setup.py](https://github.com/navdeep-G/setup.py)
+* [requirements.txt](https://pip.pypa.io/en/stable/user_guide/#requirements-files) 
