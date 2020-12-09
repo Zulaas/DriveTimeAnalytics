@@ -17,7 +17,7 @@ DESCRIPTION = 'analyzes the time per Cycle a Continous Miner drives forward or b
 URL = 'https://github.com/Zulaas/DriveTimeAnalytics'
 EMAIL = 'jan@ueberruhr.de'
 AUTHOR = 'Jan Zimmermann'
-REQUIRES_PYTHON = '>=3.6.0'
+REQUIRES_PYTHON = '>=3.9.0'
 VERSION = '0.1.0'
 
 # What packages are required for this module to be executed?
