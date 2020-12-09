@@ -1,5 +1,8 @@
 # DriveTimeAnalytics
 
+![tests](https://github.com/Zulaas/DriveTimeAnalytics/.github/workflows/badge.svg)
+
+
 analyzes the time per Cycle a Continous Miner drives forward or backwards
 
 ## Start the Project
