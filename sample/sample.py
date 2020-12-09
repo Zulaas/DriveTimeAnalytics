@@ -1,11 +1,14 @@
 import pandas as pd
-import numpy as np
 
 
 def main():
-    data = pd.read_csv("../data/cycle_intervals_complete_2019_11.csv")
+    cycles = pd.read_csv("data/cycle_intervals_complete_2019_11.csv")
+    backward = pd.read_csv("data/sensor_FW_Rückwärts_complete_2019_11.csv")
+    forward = pd.read_csv("data/sensor_FW_Vorwärts_complete_2019_11.csv")
+    print(cycles.head())
+    print(backward.head())
+    print(forward.head())
 
-    print("hello world!")
 
 
 main()
