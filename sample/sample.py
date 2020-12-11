@@ -7,26 +7,32 @@ def findClosestIndex(search, df):
     idx = (df['Time'] - search).abs().idxmin()
     values = df.loc[idx]
     if values['Time'] > search:
+        if idx == 0:
+            raise Exception(f'idx:{idx} is zero that causes a '
+                            f'IndexOutOfBoundException in further processing check data')
         idx -= 1
     return idx
 
 
 def relativeDelta(start, end):
+    if start > end:
+        raise Exception(f'start:{start} can`t be greater than end:{end}')
     timeDelta = end - start
     return timeDelta
 
 
-def calculateEndTime(endToTest, absolutEnd):
+def calculateEndTime(endToTest, absolutEnd, absolutStart):
     end = endToTest
-    if endToTest > absolutEnd:
+    if (endToTest > absolutEnd) or (endToTest < absolutStart):
         end = absolutEnd
     return end
 
 
 def countTimeDriven(start, rowEnd, df):
+    absolut = start
     startIdx = findClosestIndex(start, df)
     values = df.loc[startIdx]
-    end = calculateEndTime(values['Time'], rowEnd)
+    end = calculateEndTime(values['Time'], rowEnd, start)
     timeDriven = datetime.timedelta(0)
     while start < rowEnd:
         if values['Value'] == 1:
@@ -35,7 +41,7 @@ def countTimeDriven(start, rowEnd, df):
         startIdx += 1
         # Todo idx should not be bigger than the end index in the dataframe
         values = df.loc[startIdx]
-        end = calculateEndTime(values['Time'], rowEnd)
+        end = calculateEndTime(values['Time'], rowEnd, absolut)
     return timeDriven
 
 
@@ -59,12 +65,11 @@ def getSensorForward():
 
 
 def analyzeCycles(cycles, backward, forward):
-    for index, cycle in cycles.head().iterrows():
+    for index, cycle in cycles.iterrows():
         timeDrivenBackward = countTimeDriven(cycle['Begin'], cycle['End'], backward)
         timeDrivenForward = countTimeDriven(cycle['Begin'], cycle['End'], forward)
-        print(f'{timeDrivenBackward}  {timeDrivenForward}')
         # Todo print in csv an repeat for forward
-        print(" ")
+        print(f'timeDrivenBackward: {timeDrivenBackward} timeDrivenForward: {timeDrivenForward}')
 
 
 def main():
