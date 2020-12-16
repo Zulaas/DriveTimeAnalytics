@@ -73,8 +73,9 @@ def analyzeCycles(cycles, backward, forward):
     return df
 
 
-def calculateAverageAndWriteFiles(df):
-    df.to_csv('data/output/DriveTimePerCycle.csv', sep=',', index=False)
+def calculateAverageAndWriteFiles(df, cycles):
+    result = pd.concat([cycles, df], axis=1)
+    result.to_csv('data/output/DriveTimePerCycle.csv', sep=',', index=False)
     averagePerMonth = df.mean()
     dict = {'AveragePerMonthBackwards': averagePerMonth['timeDrivenBackward'],
             'AveragePerMonthForward': averagePerMonth['timeDrivenForward']}
@@ -89,7 +90,7 @@ def main():
     backward = getSensorBackward()
     forward = getSensorForward()
     df = analyzeCycles(cycles, backward, forward)
-    calculateAverageAndWriteFiles(df)
+    calculateAverageAndWriteFiles(df, cycles)
 
 
 main()
