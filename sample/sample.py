@@ -29,15 +29,15 @@ def calculateEndTime(endToTest, absolutEnd, absolutStart): # was soll hier ausge
 
 def countTimeDriven(start, rowEnd, df):
     startIdx = findClosestIndex(start, df)
-    values = df.loc[startIdx] #value before timestamp
+    values = df.loc[startIdx]
     startIdx += 1
-    nextValues = df.loc[startIdx] # after timestamp
-    end = calculateEndTime(nextValues['Time'], rowEnd, start) #sinn merkwürdig
+    nextValues = df.loc[startIdx]
+    end = calculateEndTime(nextValues['Time'], rowEnd, start)
     timeDriven = datetime.timedelta(0)
     maxIdx = len(df.index)
     while start < rowEnd:
         if values['Value'] == 1:
-            timeDriven += relativeDelta(start, end) #berechnung falsch falsches ende
+            timeDriven += relativeDelta(start, end)
         start = end
         startIdx += 1
         values = nextValues
