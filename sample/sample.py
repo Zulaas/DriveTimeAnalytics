@@ -20,7 +20,7 @@ def relativeDelta(start, end):
     return timeDelta
 
 
-def calculateEndTime(endToTest, absolutEnd, absolutStart):
+def calculateEndTime(endToTest, absolutEnd, absolutStart): # was soll hier ausgerechnet werden
     end = endToTest
     if (endToTest > absolutEnd) or (endToTest < absolutStart):
         end = absolutEnd
@@ -29,19 +29,22 @@ def calculateEndTime(endToTest, absolutEnd, absolutStart):
 
 def countTimeDriven(start, rowEnd, df):
     startIdx = findClosestIndex(start, df)
-    values = df.loc[startIdx]
-    end = calculateEndTime(values['Time'], rowEnd, start)
+    values = df.loc[startIdx] #value before timestamp
+    startIdx += 1
+    nextValues = df.loc[startIdx] # after timestamp
+    end = calculateEndTime(nextValues['Time'], rowEnd, start) #sinn merkwürdig
     timeDriven = datetime.timedelta(0)
     maxIdx = len(df.index)
     while start < rowEnd:
         if values['Value'] == 1:
-            timeDriven += relativeDelta(start, end)
+            timeDriven += relativeDelta(start, end) #berechnung falsch falsches ende
         start = end
         startIdx += 1
+        values = nextValues
         if startIdx > maxIdx:
             raise Exception(f'IndexOutOf BoundException startIdx:{startIdx} than the max index of the df:{maxIdx}')
-        values = df.loc[startIdx]
-        end = calculateEndTime(values['Time'], rowEnd, start)
+        nextValues = df.loc[startIdx]
+        end = calculateEndTime(nextValues['Time'], rowEnd, start)
     return timeDriven
 
 
