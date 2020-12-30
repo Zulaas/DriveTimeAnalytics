@@ -2,7 +2,7 @@ import datetime
 import pandas as pd
 
 
-def findClosestIndex(search, df):
+def findClosestIndexBeforeStartValue(search, df):
     idx = (df['Time'] - search).abs().idxmin()
     values = df.loc[idx]
     if values['Time'] > search:
@@ -20,7 +20,7 @@ def relativeDelta(start, end):
     return timeDelta
 
 
-def calculateEndTime(endToTest, absolutEnd, absolutStart): # was soll hier ausgerechnet werden
+def calculateEndTime(endToTest, absolutEnd, absolutStart):
     end = endToTest
     if (endToTest > absolutEnd) or (endToTest < absolutStart):
         end = absolutEnd
@@ -28,23 +28,23 @@ def calculateEndTime(endToTest, absolutEnd, absolutStart): # was soll hier ausge
 
 
 def countTimeDriven(start, rowEnd, df):
-    startIdx = findClosestIndex(start, df)
+    startIdx = findClosestIndexBeforeStartValue(start, df)
     values = df.loc[startIdx]
     startIdx += 1
     nextValues = df.loc[startIdx]
-    end = calculateEndTime(nextValues['Time'], rowEnd, start)
+    relativeEnd = calculateEndTime(nextValues['Time'], rowEnd, start)
     timeDriven = datetime.timedelta(0)
     maxIdx = len(df.index)
     while start < rowEnd:
         if values['Value'] == 1:
-            timeDriven += relativeDelta(start, end)
-        start = end
-        startIdx += 1
+            timeDriven += relativeDelta(start, relativeEnd)
+        start = relativeEnd
         values = nextValues
+        startIdx += 1
         if startIdx > maxIdx:
             raise Exception(f'IndexOutOf BoundException startIdx:{startIdx} than the max index of the df:{maxIdx}')
         nextValues = df.loc[startIdx]
-        end = calculateEndTime(nextValues['Time'], rowEnd, start)
+        relativeEnd = calculateEndTime(nextValues['Time'], rowEnd, start)
     return timeDriven
 
 
@@ -84,8 +84,6 @@ def calculateAverageAndWriteFiles(df, cycles):
             'AveragePerMonthForward': averagePerMonth['timeDrivenForward']}
     df2 = pd.DataFrame(dict, index=[1])
     df2.to_csv('data/output/AveragePerMonth.csv', sep=',', index=False)
-    # Todo pro Schicht / Tag / Stunde
-    # Todo Zeit pro Cycle ab dem gefahren wird (wenn dort ein Zusammenhang besteht)
 
 
 def main():
