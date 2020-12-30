@@ -22,7 +22,7 @@ def relativeDelta(start, end):
 
 def calculateEndTime(endToTest, absolutEnd):
     end = endToTest
-    if (endToTest > absolutEnd):
+    if endToTest > absolutEnd:
         end = absolutEnd
     return end
 
@@ -61,13 +61,15 @@ def getCycles():
 
 def getSensorBackward():
     backward = pd.read_csv("data/input/sensor_FW_Rückwärts_complete_2019_11.csv")
-    backward['Time'] = pd.to_datetime(backward['Time'])
+    backward['Time'] = pd.to_datetime(backward['Time'], format='%Y-%m-%d %H:%M:%S')
+    backward['Time'] = backward['Time'] - datetime.timedelta(hours=1)
     return backward
 
 
 def getSensorForward():
     forward = pd.read_csv("data/input/sensor_FW_Vorwärts_complete_2019_11.csv")
-    forward['Time'] = pd.to_datetime(forward['Time'])
+    forward['Time'] = pd.to_datetime(forward['Time'], format='%Y-%m-%d %H:%M:%S')
+    forward['Time'] = forward['Time'] - datetime.timedelta(hours=1)
     return forward
 
 
